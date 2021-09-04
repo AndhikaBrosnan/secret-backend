@@ -16,8 +16,6 @@ exports.create = async (req, res) => {
         text: req.body.text,
     });
 
-    console.log(newThread)
-
     try {
         // Save Tutorial in the database
         thread = await newThread.save(newThread);
@@ -70,7 +68,7 @@ exports.findAll = async (req, res) => {
     var condition = text ? { text: { $regex: new RegExp(text), $options: "i" } } : {};
   
     try {
-        threads = await ThreadModel.find(condition).populate("comments")
+        threads = await ThreadModel.find(condition).sort({"createdAt": -1}).populate("comments");  
         res.send(threads);
     } catch(error) {
         res.status(500).send({
