@@ -5,19 +5,19 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 
+var config = require('./config/db');
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var threadsRouter = require('./routes/threads');
 const { log } = require('console');
 
 var app = express();
-const uri = "mongodb+srv://dabreeze:dabreeze@cluster0.gvz5s.mongodb.net/DaBreeze?retryWrites=true&w=majority";
 const db = mongoose.connection;
 
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(config.url, { useNewUrlParser: true, useUnifiedTopology: true });
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   // we're connected!
-  console.log("Connected to DB");
+  log("Connected to DB");
 });
 
 // view engine setup
@@ -31,7 +31,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/threads', threadsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
