@@ -32,16 +32,24 @@ exports.create = async (req, res) => {
 };
 
 exports.createLike = async (req, res) => {
-  const threadId = req.body.id;
+  const threadId = req.body.threadId;
   const likedId = req.body.likedId;
-  try {
-    //change
-    const newLike = new LikeModel({
-      threadId: req.body.threadId,
-      likedId: req.body.likedId,
-    });
 
+  const newLike = new LikeModel({
+    threadId: threadId,
+    likedId: likedId,
+  });
+
+  try {
     like = await newLike.save(newLike);
+
+    // add Comment id to thread
+    threadLike = await LikeModel.findByIdAndUpdate(
+      threadId,
+      { $push: { like: like._id } },
+      { new: true, useFindAndModify: false }
+    );
+
     res.send(like);
   } catch (error) {
     res.status(500).send({

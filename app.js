@@ -1,29 +1,15 @@
-<<<<<<< HEAD
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-const mongoose = require('mongoose');
-var cors = require('cors');
-
-var config = require('./config/db');
-var indexRouter = require('./routes/index');
-var threadsRouter = require('./routes/threads');
-const { log } = require('console');
-=======
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const mongoose = require("mongoose");
+var cors = require("cors");
 
 var config = require("./config/db");
 var indexRouter = require("./routes/index");
 var threadsRouter = require("./routes/threads");
 const { log } = require("console");
->>>>>>> 3c1e032f6aad6d37612768f2c4635c8dffeaf262
 
 var app = express();
 const db = mongoose.connection;
@@ -46,7 +32,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 app.use("/", indexRouter);
