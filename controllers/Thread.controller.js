@@ -112,3 +112,20 @@ exports.findAll = async (req, res) => {
     });
   }
 };
+
+exports.fetchLike = async (req, res) => {
+  const threadId = req.query.threadId;
+  var condition = threadId
+    ? { threadId: { $regex: new RegExp(threadId), $options: "i" } }
+    : {};
+
+  try {
+    likes = await LikeModel.find(condition).sort({ createdAt: -1 });
+    res.send(likes);
+  } catch (error) {
+    res.status(500).send({
+      message:
+        error.message || "Some error occurred while retrieving tutorials.",
+    });
+  }
+};

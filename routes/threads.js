@@ -9,6 +9,8 @@ router.get("/", threads.findAll);
 
 router.post("/create-comment", threads.createComment);
 
-router.post("/like", threads.createLike);
+router.post("/create-like", threads.createLike);
+
+router.get("/like", threads.fetchLike);
 
 module.exports = router;
