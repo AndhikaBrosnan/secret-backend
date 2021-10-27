@@ -43,13 +43,6 @@ exports.createLike = async (req, res) => {
   try {
     like = await newLike.save(newLike);
 
-    // add Comment id to thread
-    threadLike = await LikeModel.findByIdAndUpdate(
-      threadId,
-      { $push: { like: like._id } },
-      { new: true, useFindAndModify: false }
-    );
-
     res.send(like);
   } catch (error) {
     res.status(500).send({
@@ -79,7 +72,7 @@ exports.createComment = async (req, res) => {
     comment = await newComment.save(newComment);
 
     // add Comment id to thread
-    thred = await ThreadModel.findByIdAndUpdate(
+    thred = await ThreadModel.find(
       threadId,
       { $push: { comments: comment._id } },
       { new: true, useFindAndModify: false }

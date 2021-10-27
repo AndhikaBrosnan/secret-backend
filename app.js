@@ -37,7 +37,6 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/threads", threadsRouter);
-app.use("/like", threadsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
